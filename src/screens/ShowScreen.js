@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Context } from '../context/BlogContext';
+import { AntDesign } from '@expo/vector-icons';
 
 const ShowScreen = ({ navigation }) => {
     const { state } = useContext(Context);
@@ -10,10 +11,27 @@ const ShowScreen = ({ navigation }) => {
     return (
         <View>
             <Text>{blogPost.title}</Text>
+            <Text>{blogPost.content}</Text>
         </View>
     )
 };
 
-const style = StyleSheet.create({});
+ShowScreen.navigationOptions = ({ navigation }) => {
+    return {
+        headerRight: () => (
+            <TouchableOpacity 
+                style={styles.editIcon} 
+                onPress={() => navigation.navigate('Edit', {id: navigation.getParam('id')}) }>
+                <AntDesign name="edit" size={32} color="black" />
+            </TouchableOpacity>
+        )
+    }
+}
+
+const styles = StyleSheet.create({
+    editIcon: {
+        marginRight: 15
+    }
+});
 
 export default ShowScreen;
